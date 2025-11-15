@@ -2,20 +2,24 @@
 import operacoes
 menu  = """"
  
-Informe a operação desejada!
+ ================ MENU ================
+    [d]  Depositar
+    [s]  Sacar
+    [e]  Extrato
+    [nc] Nova conta
+    [nu] Novo usuário
+    [q]  Sair
+    => """
 
-[d] Depositar
-[s] Sacar
-[e] Extrato
-[q] Sair
+LIMITE_SAQUES = 3
+AGENCIA = "0001"
 
-=> """
-
-saldo = 1000
+saldo = 0
 limite = 500
 extrato = ""
 numero_saques = 0
-LIMITE_SAQUES = 3
+usuarios = []#nome,data nascikento, cpf, endereco / apenas um usuraio por cpf
+contas = []
 
 
 
@@ -36,15 +40,29 @@ while True:
                 numero_saques=numero_saques,
                 limite_saques=LIMITE_SAQUES,)
  elif menu_aux == "e":
-  operacoes.extrato(saldo,extrato)
-  
+  operacoes.extrato(saldo,extratoe=extrato)
+ 
+ elif menu_aux == "nu":
+      operacoes.criar_usuarios(usuarios)
+      
+
+
+ elif menu_aux == "nc":
+      numero_conta = len(contas) + 1
+      conta = operacoes.nova_conta(AGENCIA, numero_conta, usuarios)
+
+      if conta:
+        contas.append(conta)
+
  elif menu_aux == "q":
   break
  
+else:
+   print("Operação inválida, por favor selecione novamente a operação desejada.")
+ 
 
 
 
 
 
  
-

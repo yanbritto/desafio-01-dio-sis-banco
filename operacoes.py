@@ -1,6 +1,6 @@
 
 
-def depositar (saldo, valor, extrato):
+def depositar (saldo, valor, extrato,/):
  if valor > 0 :
     print(valor)
     saldo += valor
@@ -36,9 +36,50 @@ def sacar (*,valor,limite,limite_saques,saldo, numero_saques,extrato):
              print("Operação falhou! O valor informado é inválido.")
 
 
-def extrato (saldo,extrato): 
+def extrato (saldo, /, *, extrato): 
         print("\n================ EXTRATO ================")
         print("Não foram realizadas movimentações." if not extrato else extrato)
         print(f"\nSaldo: R$ {saldo:.2f}")
         print("==========================================")
         return saldo, extrato
+
+
+def filtrar_usuario (cpf,usuarios):
+    for usuario in usuarios:
+        if usuario["cpf" == cpf]:
+             return usuario
+        
+    return None
+    
+def criar_usuarios (usuarios):
+    cpf = input("informe seu CPF: ")
+    usuario = filtrar_usuario(usuarios,cpf)
+
+    if usuario:
+        print("já existe um usuário com esse CPF")
+    else:
+         nome = input("Informe o nome completo: ")
+         data_nascimento = input("Informe a data de nascimento (dd-mm-aaaa): ")
+         endereco = input("Informe o endereço (logradouro, nro - bairro - cidade/sigla estado): ")
+
+         usuario = {
+        "nome": nome,
+        "data_nascimento": data_nascimento,
+        "cpf": cpf,
+        "endereco": endereco,
+        }
+
+         usuarios.append(usuario)
+
+         print("=== Usuário criado com sucesso! ===")
+    
+def nova_conta (agencia, numero_conta, usuarios):
+    cpf = input("informe seu CPF: ")
+    usuario = filtrar_usuario(usuarios,cpf)
+
+    if usuario:
+        print("\n=== Conta criada com sucesso! ===")
+        return {"agencia": agencia, "numero_conta": numero_conta, "usuario": usuario}
+        
+
+    print(" Usuário não encontrado, fluxo de criação de conta encerrado!")
